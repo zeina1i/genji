@@ -197,6 +197,58 @@ func (p *Parser) parsePathList() ([]document.Path, error) {
 	return paths, nil
 }
 
+func (p *Parser) parsePathAndDirectionList() ([]document.Path, []scanner.Token, error) {
+	// Parse ( token.
+	if ok, err := p.parseOptional(scanner.LPAREN); !ok || err != nil {
+		return nil, nil, err
+	}
+
+	var paths []document.Path
+	var err error
+	var path document.Path
+	// Parse first (required) path.
+	if path, err = p.parsePath(); err != nil {
+		return nil, nil, err
+	}
+
+	paths = append(paths, path)
+
+	var pathDirections []scanner.Token
+	var pathDirection scanner.Token
+
+	// Parse first (optional) path direction ASC|DESC
+	pathDirection = p.parsePathDirection()
+
+	pathDirections = append(pathDirections, pathDirection)
+
+	// Parse remaining (optional) paths.
+	for {
+		if tok, _, _ := p.ScanIgnoreWhitespace(); tok != scanner.COMMA {
+			p.Unscan()
+			break
+		}
+
+		vp, err := p.parsePath()
+		if err != nil {
+			return nil, nil, err
+		}
+
+		paths = append(paths, vp)
+
+		pathDirection = p.parsePathDirection()
+
+		pathDirections = append(pathDirections, pathDirection)
+
+	}
+
+	// Parse required ) token.
+	if err := p.parseTokens(scanner.RPAREN); err != nil {
+		return nil, nil, err
+	}
+
+	return paths, pathDirections, nil
+}
+
 // Scan returns the next token from the underlying scanner.
 func (p *Parser) Scan() (tok scanner.Token, pos scanner.Pos, lit string) { return p.s.Scan() }
 

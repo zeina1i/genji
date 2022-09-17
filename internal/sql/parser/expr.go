@@ -603,6 +603,16 @@ LOOP:
 	return path, nil
 }
 
+func (p *Parser) parsePathDirection() scanner.Token {
+	// parse optional ASC or DESC
+	if tok, _, _ := p.ScanIgnoreWhitespace(); tok == scanner.ASC || tok == scanner.DESC {
+		return tok
+	}
+
+	p.Unscan()
+	return 0
+}
+
 func (p *Parser) parseExprListUntil(rightToken scanner.Token) (expr.LiteralExprList, error) {
 	var exprList expr.LiteralExprList
 	var expr expr.Expr

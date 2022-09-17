@@ -31,6 +31,7 @@ func TestCreateIndex(t *testing.T) {
 		fails bool
 	}{
 		{"Basic", "CREATE INDEX idx ON test (foo)", false},
+		{"Basic with path direction", "CREATE INDEX idx ON test (foo ASC)", false},
 		{"If not exists", "CREATE INDEX IF NOT EXISTS idx ON test (foo.bar)", false},
 		{"Duplicate", "CREATE INDEX idx ON test (foo.bar);CREATE INDEX idx ON test (foo.bar)", true},
 		{"Unique", "CREATE UNIQUE INDEX IF NOT EXISTS idx ON test (foo)", false},
@@ -39,6 +40,7 @@ func TestCreateIndex(t *testing.T) {
 		{"No fields", "CREATE INDEX idx ON test", true},
 		{"Composite (2)", "CREATE INDEX idx ON test (foo, baz)", false},
 		{"Composite (3)", "CREATE INDEX idx ON test (foo, baz, baf)", false},
+		{"Composite (4)", "CREATE INDEX idx ON test (foo, baz DESC, baf)", false},
 	}
 
 	for _, test := range tests {

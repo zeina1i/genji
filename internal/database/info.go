@@ -8,6 +8,7 @@ import (
 
 	"github.com/cockroachdb/errors"
 	"github.com/genjidb/genji/document"
+	"github.com/genjidb/genji/internal/sql/scanner"
 	"github.com/genjidb/genji/internal/stringutil"
 	"github.com/genjidb/genji/internal/tree"
 	"github.com/genjidb/genji/types"
@@ -237,9 +238,10 @@ type PrimaryKey struct {
 // IndexInfo holds the configuration of an index.
 type IndexInfo struct {
 	// namespace of the store associated with the index.
-	StoreNamespace tree.Namespace
-	IndexName      string
-	Paths          []document.Path
+	StoreNamespace  tree.Namespace
+	IndexName       string
+	Paths           []document.Path
+	PathsDirections []scanner.Token
 
 	// If set to true, values will be associated with at most one key. False by default.
 	Unique bool
