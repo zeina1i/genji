@@ -221,7 +221,7 @@ func (p *Parser) parsePathAndDirectionList() ([]document.Path, []scanner.Token, 
 
 	pathDirections = append(pathDirections, pathDirection)
 
-	// Parse remaining (optional) paths.
+	// Parse remaining (optional) paths and path directions.
 	for {
 		if tok, _, _ := p.ScanIgnoreWhitespace(); tok != scanner.COMMA {
 			p.Unscan()
