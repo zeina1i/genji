@@ -437,7 +437,7 @@ func (p *Parser) parseCreateIndexStatement(unique bool) (*statement.CreateIndexS
 		return nil, err
 	}
 
-	paths, pathsDirections, err := p.parsePathAndDirectionList()
+	paths, pathsDirections, err := p.parsePathAndPathDirectionList()
 	if err != nil {
 		return nil, err
 	}

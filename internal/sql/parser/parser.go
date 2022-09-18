@@ -197,7 +197,7 @@ func (p *Parser) parsePathList() ([]document.Path, error) {
 	return paths, nil
 }
 
-func (p *Parser) parsePathAndDirectionList() ([]document.Path, []scanner.Token, error) {
+func (p *Parser) parsePathAndPathDirectionList() ([]document.Path, []scanner.Token, error) {
 	// Parse ( token.
 	if ok, err := p.parseOptional(scanner.LPAREN); !ok || err != nil {
 		return nil, nil, err
