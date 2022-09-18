@@ -447,7 +447,7 @@ func (p *Parser) parseCreateIndexStatement(unique bool) (*statement.CreateIndexS
 	}
 
 	stmt.Info.Paths = paths
-	stmt.Info.PathsDirections = pathsDirections
+	stmt.Info.PathDirections = pathsDirections
 
 	return &stmt, nil
 }

@@ -238,10 +238,10 @@ type PrimaryKey struct {
 // IndexInfo holds the configuration of an index.
 type IndexInfo struct {
 	// namespace of the store associated with the index.
-	StoreNamespace  tree.Namespace
-	IndexName       string
-	Paths           []document.Path
-	PathsDirections []scanner.Token
+	StoreNamespace tree.Namespace
+	IndexName      string
+	Paths          []document.Path
+	PathDirections []scanner.Token
 
 	// If set to true, values will be associated with at most one key. False by default.
 	Unique bool
